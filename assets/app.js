@@ -6,10 +6,10 @@
 
   if (config.name) {
     const intro = document.getElementById("designer-intro");
-    if (intro) intro.textContent = `أنا ${config.name} — مصمم موشن،`;
+    if (intro) intro.textContent = `أنا ${config.name} — رسّام ومصمم موشن،`;
     const aboutLead = document.getElementById("about-lead");
-    if (aboutLead) aboutLead.textContent = `أنا ${config.name}، مصمم موشن أعمل على تحويل الأفكار والرسائل إلى تجارب بصرية نابضة بالحياة.`;
-    document.title = document.title.replace("أعمال الموشن", config.name);
+    if (aboutLead) aboutLead.textContent = `أنا ${config.name}، أجمع بين الرسم الرقمي والموشن لصناعة شخصيات ومشاهد أصلية تمنح العلامات التجارية عالماً بصرياً خاصاً بها.`;
+    document.title = document.title.replace("الرسم والموشن", config.name).replace("أعمال الموشن", config.name);
   }
 
   const contactMethods = document.getElementById("contact-methods");
@@ -49,7 +49,7 @@
     if (!project) {
       detail.innerHTML = `<h1>هذا العمل غير موجود</h1><p><a class="project-link" href="index.html#portfolio">العودة إلى معرض الأعمال</a></p>`;
     } else {
-      document.title = `${project.title} — أعمال الموشن`;
+      document.title = `${project.title} — الرسم والموشن`;
       const link = project.link && /^https?:\/\//i.test(project.link)
         ? `<a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">شاهد العمل الكامل ↗</a>` : "";
       const demo = !project.image && !project.video ? `<span class="demo-label">نموذج بصري تجريبي</span>` : "";
