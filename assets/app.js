@@ -24,7 +24,7 @@
 
   // يقبل روابط مثل https://vimeo.com/123456789 أو https://vimeo.com/123456789/abcdef (الروابط غير المدرجة)
   function vimeoSrc(url, background) {
-    const match = String(url || "").match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/);
+    const match = String(url || "").match(/vimeo\.com\/(?:manage\/videos\/|video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/);
     if (!match) return "";
     const params = new URLSearchParams({ dnt: "1" });
     if (match[2]) params.set("h", match[2]);
