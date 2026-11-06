@@ -23,7 +23,7 @@
  * الرسوم الحالية نماذج أصلية تجريبية وليست أعمالاً حقيقية.
  */
 window.PORTFOLIO_PROJECTS = [
-  { id: "rig-deadpool", section: "rig", type: "practice", title: "ريغ شخصية ديدبول", category: "ريغ وتحريك شخصيات",
+  { id: "rig-deadpool", section: "rig", title: "ريغ شخصية ديدبول", category: "ريغ وتحريك شخصيات",
     video: "assets/rig/deadpool-rig.mp4", poster: "assets/rig/deadpool-rig.jpg",
     description: "ريغ كامل لشخصية مسطّحة في After Effects: أطراف قابلة للانثناء، وتحكم في اليدين والسيفين، وحركة سريعة لاختبار الهيكل." },
   { id: "work-01", title: "عمل موشن جرافيك", category: "موشن جرافيك", vimeo: "https://vimeo.com/1241715431", description: "" },
