@@ -22,6 +22,7 @@
  */
 window.PORTFOLIO_PROJECTS = [
   { id: "work-01", title: "عمل موشن جرافيك", category: "موشن جرافيك", vimeo: "https://vimeo.com/1241715431", description: "" },
+  { id: "work-02", title: "عمل موشن جرافيك 2", category: "موشن جرافيك", vimeo: "https://vimeo.com/1241715433", description: "" },
   { id: "rhythm", title: "إيقاع الأشكال", category: "استكشاف بصري", art: "shapes", description: "تجربة بصرية للأشكال البسيطة والإيقاع والحركة." },
   { id: "character", title: "وجه وحركة", category: "تحريك شخصيات", art: "face", description: "دراسة تجريبية لتعبيرات الشخصية باستخدام أشكال هندسية قليلة.",
     caseStudy: {
