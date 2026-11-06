@@ -10,7 +10,7 @@ img,video,svg{display:block;max-width:100%}
 .skip-link{position:absolute;top:-100px;right:1rem;z-index:10;background:#fff;border:2px solid var(--ink);padding:.5rem 1rem}
 .skip-link:focus{top:1rem}
 :focus-visible{outline:3px solid var(--accent);outline-offset:4px}
-.site-header{min-height:80px;display:flex;align-items:flex-start;justify-content:flex-end;padding-block:23px 4px}
+.site-header{min-height:80px;display:flex;align-items:flex-start;justify-content:flex-start;padding-block:23px 4px}
 .nav{display:flex;gap:2.75rem;align-items:center;font-size:1.25rem;line-height:1.3;white-space:nowrap}
 .nav-link{transition:color .18s ease}
 .nav-link:hover,.nav-link.is-active:hover{color:var(--accent)}
