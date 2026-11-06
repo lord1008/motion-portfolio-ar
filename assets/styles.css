@@ -131,3 +131,6 @@ a.footer-note:hover{color:var(--accent)}
 .vimeo-frame.is-background iframe{inset:auto;top:50%;left:50%;width:177.78%;height:100%;min-width:100%;min-height:56.25%;transform:translate(-50%,-50%)}
 .project-media.is-wide{aspect-ratio:16/9;background:#111}
 .project-media.is-wide .vimeo-frame{height:100%;border-radius:0}
+.project-media.is-wide video{object-fit:contain}
+.gallery-empty{grid-column:1/-1;text-align:center;color:var(--muted);font-size:1.2rem;padding:40px 0}
+@media(max-width:650px){.nav{gap:1.1rem}}

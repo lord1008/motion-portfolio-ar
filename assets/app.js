@@ -48,19 +48,27 @@
     if (project.video) {
       const src = escapeHtml(project.video);
       const poster = project.poster ? ` poster="${escapeHtml(project.poster)}"` : "";
-      return `<video src="${src}"${poster} ${detail ? "controls" : "autoplay muted loop"} playsinline preload="metadata" aria-label="${title}"></video>`;
+      return `<video src="${src}"${poster} ${detail ? "controls autoplay muted loop" : "autoplay muted loop"} playsinline preload="metadata" aria-label="${title}"></video>`;
     }
     if (project.image) return `<img src="${escapeHtml(project.image)}" alt="${title}" loading="lazy">`;
     return art[project.art] || "";
   }
 
+  const TYPE_LABELS = { client: "لعميل", personal: "مشروع ذاتي", practice: "تمرين تدريبي" };
+  const typeLabel = (project) => TYPE_LABELS[project.type] || "";
+
   const gallery = document.getElementById("gallery");
   if (gallery) {
-    gallery.innerHTML = projects.map((project) => `
-      <a class="work-card" href="project.html?id=${encodeURIComponent(project.id)}" aria-label="عرض ${escapeHtml(project.title)}">
+    const section = gallery.dataset.section;
+    const list = section ? projects.filter((p) => (p.section || "motion") === section) : projects;
+    gallery.innerHTML = list.length ? list.map((project) => {
+      const meta = [project.category, typeLabel(project)].filter(Boolean).map(escapeHtml).join(" · ");
+      return `
+      <a class="work-card${project.video || project.vimeo ? " is-video" : ""}" href="project.html?id=${encodeURIComponent(project.id)}" aria-label="عرض ${escapeHtml(project.title)}">
         <div class="work-media">${mediaMarkup(project)}</div>
-        <div class="work-overlay"><span><strong>${escapeHtml(project.title)}</strong><small>${escapeHtml(project.category)}</small></span><span class="arrow" aria-hidden="true">↗</span></div>
-      </a>`).join("");
+        <div class="work-overlay"><span><strong>${escapeHtml(project.title)}</strong><small>${meta}</small></span><span class="arrow" aria-hidden="true">↗</span></div>
+      </a>`;
+    }).join("") : `<p class="gallery-empty">الأعمال في الطريق.</p>`;
   }
 
   const detail = document.getElementById("project-detail");
@@ -74,8 +82,8 @@
       const link = project.link && /^https?:\/\//i.test(project.link)
         ? `<a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">شاهد العمل الكامل ↗</a>` : "";
       const demo = !project.image && !project.video && !project.vimeo ? `<span class="demo-label">نموذج بصري تجريبي</span>` : "";
-      detail.innerHTML = `<div class="project-head"><h1>${escapeHtml(project.title)}</h1><p>${escapeHtml(project.category)}</p></div>
-        <div class="project-media${project.vimeo ? " is-wide" : ""}">${mediaMarkup(project, true)}</div>
+      detail.innerHTML = `<div class="project-head"><h1>${escapeHtml(project.title)}</h1><p>${[project.category, typeLabel(project)].filter(Boolean).map(escapeHtml).join(" · ")}</p></div>
+        <div class="project-media${project.vimeo || project.video ? " is-wide" : ""}">${mediaMarkup(project, true)}</div>
         <div class="project-info"><div><p>${escapeHtml(project.description || "")}</p>${link}</div>${demo}</div>
         ${caseStudyMarkup(project.caseStudy)}`;
     }

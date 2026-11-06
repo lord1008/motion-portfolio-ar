@@ -6,6 +6,8 @@
  *   poster: "assets/cover.jpg"             ← صورة غلاف للمعرض (اختياري، يُنصح بها مع Vimeo)
  *   أو image: "assets/my-project.jpg" / video: "assets/my-project.mp4"
  *   link: "https://..." لرابط خارجي (Behance مثلاً)
+ *   section: "rig" لقسم الريغ (بدونه يظهر العمل في الموشن)
+ *   type: "client" لعميل / "personal" مشروع ذاتي / "practice" تمرين تدريبي
  *
  * دراسة الحالة (اختيارية) — أضف caseStudy لأي مشروع، وكل حقل فيها اختياري:
  *   caseStudy: {
@@ -21,6 +23,9 @@
  * الرسوم الحالية نماذج أصلية تجريبية وليست أعمالاً حقيقية.
  */
 window.PORTFOLIO_PROJECTS = [
+  { id: "rig-deadpool", section: "rig", type: "practice", title: "ريغ شخصية ديدبول", category: "ريغ وتحريك شخصيات",
+    video: "assets/rig/deadpool-rig.mp4", poster: "assets/rig/deadpool-rig.jpg",
+    description: "ريغ كامل لشخصية مسطّحة في After Effects: أطراف قابلة للانثناء، وتحكم في اليدين والسيفين، وحركة سريعة لاختبار الهيكل." },
   { id: "work-01", title: "عمل موشن جرافيك", category: "موشن جرافيك", vimeo: "https://vimeo.com/1241715431", description: "" },
   { id: "work-02", title: "عمل موشن جرافيك 2", category: "موشن جرافيك", vimeo: "https://vimeo.com/1241715433", description: "" },
   { id: "rhythm", title: "إيقاع الأشكال", category: "استكشاف بصري", art: "shapes", description: "تجربة بصرية للأشكال البسيطة والإيقاع والحركة." },
