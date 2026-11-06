@@ -1,12 +1,41 @@
 /*
  * عدّل هذا الملف لإضافة أعمالك. لكل مشروع:
- * image: "assets/my-project.jpg" أو video: "assets/my-project.mp4"
- * link: "https://..." لرابط النسخة الكاملة على Vimeo/YouTube/Behance.
+ *   id: معرّف قصير بالإنجليزية بدون مسافات (يظهر في الرابط)
+ *   title / category / description: العنوان والتصنيف والوصف المختصر
+ *   vimeo: "https://vimeo.com/123456789"  ← رابط الفيديو على Vimeo (الأسهل)
+ *   poster: "assets/cover.jpg"             ← صورة غلاف للمعرض (اختياري، يُنصح بها مع Vimeo)
+ *   أو image: "assets/my-project.jpg" / video: "assets/my-project.mp4"
+ *   link: "https://..." لرابط خارجي (Behance مثلاً)
+ *
+ * دراسة الحالة (اختيارية) — أضف caseStudy لأي مشروع، وكل حقل فيها اختياري:
+ *   caseStudy: {
+ *     client, year, role, duration, tools: ["After Effects", "Illustrator"],
+ *     challenge: "ما المشكلة أو طلب العميل؟",
+ *     idea: "ما الفكرة التي اقترحتها ولماذا؟",
+ *     process: [ { title: "الاسكتش", text: "...", image: "assets/x.jpg" }, ... ],
+ *     result: "ماذا تحقق؟",
+ *     results: [ { value: "+40%", label: "زيادة المشاهدات" } ],
+ *     gallery: [ { image: "assets/frame-1.jpg", caption: "..." }, { vimeo: "https://vimeo.com/..." } ]
+ *   }
+ * انظر مشروع "character" أدناه كمثال كامل.
  * الرسوم الحالية نماذج أصلية تجريبية وليست أعمالاً حقيقية.
  */
 window.PORTFOLIO_PROJECTS = [
   { id: "rhythm", title: "إيقاع الأشكال", category: "استكشاف بصري", art: "shapes", description: "تجربة بصرية للأشكال البسيطة والإيقاع والحركة." },
-  { id: "character", title: "وجه وحركة", category: "تحريك شخصيات", art: "face", description: "دراسة تجريبية لتعبيرات الشخصية باستخدام أشكال هندسية قليلة." },
+  { id: "character", title: "وجه وحركة", category: "تحريك شخصيات", art: "face", description: "دراسة تجريبية لتعبيرات الشخصية باستخدام أشكال هندسية قليلة.",
+    caseStudy: {
+      client: "مثال: متجر محلي", year: "2025", role: "رسم الشخصية + التحريك", duration: "أسبوعان",
+      tools: ["Illustrator", "After Effects"],
+      challenge: "مثال: أراد العميل شخصية تعبّر عن علامته وتُستخدم في محتوى السوشيال ميديا بشكل متكرر، دون أن تبدو معقدة أو ثقيلة.",
+      idea: "مثال: بناء الشخصية من أشكال هندسية قليلة حتى يسهل تحريكها بسرعة، مع تعابير وجه واضحة تُقرأ على شاشة الجوال.",
+      process: [
+        { title: "الاسكتش والبحث", text: "مثال: رسمت عدة اتجاهات للشكل واخترنا الأبسط مع العميل." },
+        { title: "الرسم في Illustrator", text: "مثال: فصلت الطبقات (العينين، الفم، الرأس) لتجهيزها للتحريك." },
+        { title: "التحريك في After Effects", text: "مثال: بنيت ريغ بسيط وحركات تعبير قصيرة قابلة لإعادة الاستخدام." }
+      ],
+      result: "مثال: مكتبة من 8 حركات قصيرة يستخدمها العميل في منشوراته.",
+      results: [ { value: "8", label: "حركات جاهزة" }, { value: "+35%", label: "تفاعل المنشورات (مثال)" } ]
+    } },
   { id: "identity", title: "هوية نابضة", category: "هوية متحركة", art: "ribbons", description: "تكوين متحرك يستكشف التباين بين الخطوط السوداء واللون الأحمر." },
   { id: "lines", title: "خطوط تتقاطع", category: "تجارب موشن", art: "lines", description: "تجربة في الإيقاع والعمق باستخدام خطوط متقاطعة." },
   { id: "mascot", title: "شخصية مرحة", category: "تحريك شخصيات", art: "bunny", description: "شخصية مرسومة بخطوط بسيطة وحركات سريعة." },

@@ -22,8 +22,29 @@
     if (methods.length) contactMethods.innerHTML = `<div class="contact-methods">${methods.join("")}</div>`;
   }
 
+  // يقبل روابط مثل https://vimeo.com/123456789 أو https://vimeo.com/123456789/abcdef (الروابط غير المدرجة)
+  function vimeoSrc(url, background) {
+    const match = String(url || "").match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/);
+    if (!match) return "";
+    const params = new URLSearchParams({ dnt: "1" });
+    if (match[2]) params.set("h", match[2]);
+    if (background) { params.set("background", "1"); }
+    else { params.set("title", "0"); params.set("byline", "0"); params.set("portrait", "0"); }
+    return `https://player.vimeo.com/video/${match[1]}?${params}`;
+  }
+
+  function vimeoMarkup(url, title, background) {
+    const src = vimeoSrc(url, background);
+    if (!src) return "";
+    return `<div class="vimeo-frame${background ? " is-background" : ""}"><iframe src="${escapeHtml(src)}" title="${title}" loading="lazy" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen${background ? ' tabindex="-1"' : ""}></iframe></div>`;
+  }
+
   function mediaMarkup(project, detail = false) {
     const title = escapeHtml(project.title);
+    if (project.vimeo) {
+      if (!detail && project.poster) return `<img src="${escapeHtml(project.poster)}" alt="${title}" loading="lazy">`;
+      return vimeoMarkup(project.vimeo, title, !detail);
+    }
     if (project.video) {
       const src = escapeHtml(project.video);
       const poster = project.poster ? ` poster="${escapeHtml(project.poster)}"` : "";
@@ -52,12 +73,49 @@
       document.title = `${project.title} — الرسم والموشن`;
       const link = project.link && /^https?:\/\//i.test(project.link)
         ? `<a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">شاهد العمل الكامل ↗</a>` : "";
-      const demo = !project.image && !project.video ? `<span class="demo-label">نموذج بصري تجريبي</span>` : "";
+      const demo = !project.image && !project.video && !project.vimeo ? `<span class="demo-label">نموذج بصري تجريبي</span>` : "";
       detail.innerHTML = `<div class="project-head"><h1>${escapeHtml(project.title)}</h1><p>${escapeHtml(project.category)}</p></div>
-        <div class="project-media">${mediaMarkup(project, true)}</div>
-        <div class="project-info"><div><p>${escapeHtml(project.description || "")}</p>${link}</div>${demo}</div>`;
+        <div class="project-media${project.vimeo ? " is-wide" : ""}">${mediaMarkup(project, true)}</div>
+        <div class="project-info"><div><p>${escapeHtml(project.description || "")}</p>${link}</div>${demo}</div>
+        ${caseStudyMarkup(project.caseStudy)}`;
     }
   }
+
+  function caseMediaMarkup(item, label) {
+    if (!item) return "";
+    const alt = escapeHtml(item.caption || label || "");
+    let media = "";
+    if (item.vimeo) media = vimeoMarkup(item.vimeo, alt, false);
+    else if (item.video) media = `<video src="${escapeHtml(item.video)}"${item.poster ? ` poster="${escapeHtml(item.poster)}"` : ""} controls playsinline preload="metadata" aria-label="${alt}"></video>`;
+    else if (item.image) media = `<img src="${escapeHtml(item.image)}" alt="${alt}" loading="lazy">`;
+    if (!media) return "";
+    const caption = item.caption ? `<figcaption>${escapeHtml(item.caption)}</figcaption>` : "";
+    return `<figure class="case-figure">${media}${caption}</figure>`;
+  }
+
+  function caseStudyMarkup(cs) {
+    if (!cs) return "";
+    const facts = [
+      ["العميل", cs.client], ["السنة", cs.year], ["دوري", cs.role], ["المدة", cs.duration],
+      ["الأدوات", Array.isArray(cs.tools) ? cs.tools.join("، ") : cs.tools]
+    ].filter(([, value]) => value);
+    const factsHtml = facts.length ? `<dl class="case-facts">${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${escapeHtml(v)}</dd></div>`).join("")}</dl>` : "";
+    const block = (num, title, text) => text ? `<section class="case-block"><h2><span>${num}</span>${title}</h2><p>${escapeHtml(text)}</p></section>` : "";
+    const steps = Array.isArray(cs.process) && cs.process.length
+      ? `<section class="case-block"><h2><span>03</span>مراحل العمل</h2><ol class="case-steps">${cs.process.map((step) => `
+          <li><h3>${escapeHtml(step.title)}</h3>${step.text ? `<p>${escapeHtml(step.text)}</p>` : ""}${caseMediaMarkup(step, step.title)}</li>`).join("")}</ol></section>` : "";
+    const results = Array.isArray(cs.results) && cs.results.length
+      ? `<ul class="case-results">${cs.results.map((r) => `<li><strong>${escapeHtml(r.value)}</strong><span>${escapeHtml(r.label)}</span></li>`).join("")}</ul>` : "";
+    const resultBlock = cs.result || results
+      ? `<section class="case-block"><h2><span>04</span>النتيجة</h2>${cs.result ? `<p>${escapeHtml(cs.result)}</p>` : ""}${results}</section>` : "";
+    const gallery = Array.isArray(cs.gallery) && cs.gallery.length
+      ? `<section class="case-gallery">${cs.gallery.map((item) => caseMediaMarkup(item)).join("")}</section>` : "";
+    return `<article class="case-study" aria-label="دراسة الحالة">${factsHtml}
+      ${block("01", "التحدي", cs.challenge)}
+      ${block("02", "الفكرة", cs.idea)}
+      ${steps}${resultBlock}${gallery}</article>`;
+  }
+
 
   const clock = document.getElementById("local-clock");
   if (clock) {
